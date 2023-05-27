@@ -9,7 +9,7 @@ sudo echo "<body>" >> /var/www/html/index.html
 
 sudo echo "<h1>Public IP Address: $(curl -s http://ident.me)</h1>"  >> /var/www/html/index.html
 sudo echo "<h1>EC2 hostname: $(hostname -f)</h1>"  >> /var/www/html/index.html
-sudo echo "<h1>Private IP Address - $(ip route get 1.2.3.4 | awk '{print $7}')</h1>"  >> /var/www/html/index.html
+sudo echo "<h1>Private IP Address: $(ip route get 1.2.3.4 | awk '{print $7}')</h1>"  >> /var/www/html/index.html
 sudo echo "<p>This is the Web Server Demo with Auto Scaling Group and AWS App loadbalancer.</p>" >> /var/www/html/index.html
 
 sudo echo "</body>" >> /var/www/html/index.html
