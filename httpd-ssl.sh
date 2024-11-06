@@ -18,23 +18,51 @@ sudo yum install -y httpd mod_ssl
 
 sudo chown -R $USER:$USER /var/www/html
 
-sudo echo "<html>" > /var/www/html/index.html
+# Create index.html and add content with styling
+sudo echo "<html lang='en'>" > /var/www/html/index.html
+sudo echo "<head>" >> /var/www/html/index.html
+sudo echo "<meta charset='UTF-8'>" >> /var/www/html/index.html
+sudo echo "<meta name='viewport' content='width=device-width, initial-scale=1.0'>" >> /var/www/html/index.html
+sudo echo "<title>VMSS Demo Page</title>" >> /var/www/html/index.html
+sudo echo "<style>" >> /var/www/html/index.html
+sudo echo "body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 0; }" >> /var/www/html/index.html
+sudo echo "header { background-color: #4CAF50; padding: 20px; text-align: center; color: white; font-size: 24px; }" >> /var/www/html/index.html
+sudo echo ".content { padding: 20px; text-align: center; color: #333; }" >> /var/www/html/index.html
+sudo echo "h1 { color: #4CAF50; font-size: 22px; }" >> /var/www/html/index.html
+sudo echo "p { font-size: 18px; color: #555; }" >> /var/www/html/index.html
+sudo echo ".footer { text-align: center; margin-top: 20px; padding: 10px; background-color: #4CAF50; color: white; }" >> /var/www/html/index.html
+sudo echo "</style>" >> /var/www/html/index.html
+sudo echo "</head>" >> /var/www/html/index.html
+
+# Start body content
 sudo echo "<body>" >> /var/www/html/index.html
+sudo echo "<header><h1>Welcome to the VMSS Demo Page</h1></header>" >> /var/www/html/index.html
+sudo echo "<div class='content'>" >> /var/www/html/index.html
 
-sudo echo "<h1>Public IP Address: $(curl -s http://ident.me)</h1>"  >> /var/www/html/index.html
-sudo echo "<h1>Hostname: $(hostname -f)</h1>"  >> /var/www/html/index.html
-sudo echo "<h1>Private IP Address: $(ip route get 1.2.3.4 | awk '{print $7}')</h1>"  >> /var/www/html/index.html
-sudo echo "<p>This is the VMSS DEMO.</p>" >> /var/www/html/index.html
+# Public IP, Hostname, and Private IP Address
+sudo echo "<h1>Public IP Address: $(curl -s http://ident.me)</h1>" >> /var/www/html/index.html
+sudo echo "<h1>Hostname: $(hostname -f)</h1>" >> /var/www/html/index.html
+sudo echo "<h1>Private IP Address: $(ip route get 1.2.3.4 | awk '{print $7}')</h1>" >> /var/www/html/index.html
 
+# Demo text
+sudo echo "<p>This is a demo page for your VMSS instance running with dynamic content.</p>" >> /var/www/html/index.html
+
+# Closing content div
+sudo echo "</div>" >> /var/www/html/index.html
+
+# Footer content
+sudo echo "<div class='footer'>Powered by Azure VMSS</div>" >> /var/www/html/index.html
+
+# End of body and html tags
 sudo echo "</body>" >> /var/www/html/index.html
 sudo echo "</html>" >> /var/www/html/index.html
+
 
 # Create certificate directory
 sudo mkdir -p ${CERT_DIR}
 
 # Install Azure CLI to interact with Key Vault (if needed)
 # curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sudo dnf install -y https://packages.microsoft.com/config/rhel/8/packages-microsoft-prod.rpm
 sudo dnf install azure-cli -y
@@ -86,4 +114,5 @@ EOF'
 
 # Enable and start Apache
 sudo systemctl enable httpd
-sudo systemctl start httpd
+sudo systemctl restart httpd
+sudo systemctl status httpd
