@@ -1,0 +1,15 @@
+
+name: ZAP Baseline Scan
+on:
+ workflow_dispatch:
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run ZAP Baseline
+        uses: zaproxy/action-baseline@v0.15.0
+        with:
+          target: 'https://your-app-url.com'
+          docker_name: 'owasp/zap2docker-stable'
+          cmd_options: '-a'
