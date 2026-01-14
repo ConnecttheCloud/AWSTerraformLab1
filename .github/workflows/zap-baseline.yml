@@ -10,6 +10,6 @@ jobs:
       - name: Run ZAP Baseline
         uses: zaproxy/action-baseline@v0.15.0
         with:
-          target: 'https://your-app-url.com'
+          target: 'https://recaap-ifn-ctc.onprosia.com/login?redirect=%2F'
           docker_name: 'owasp/zap2docker-stable'
           cmd_options: '-a'
